@@ -19,12 +19,9 @@
         <h1>Scorelist</h1>
         <div class="row">
             <div id="toolbar">
-                <select class="form-control">
-                    <option value="">Export Basic</option>
-                    <option value="all">Export All</option>
-                    <option value="selected">Export Selected</option>
-                </select>
+                <button id="download-button" class="btn btn-info">Download as CSV</button>
             </div>
+           
        </div>
         <div class="row">
             <table id="table" 
@@ -32,11 +29,6 @@
                     data-toggle="table" 
                     data-toolbar="#toolbar"
                     data-search="true"
-                    data-show-export="true"
-                    data-show-refresh="true"
-                    data-show-toggle="true"
-                    data-show-columns="true"
-                    data-detail-formatter="detailFormatter"
                     data-show-pagination-switch="true" 
                     data-page-list="[10, 25, 50, 100, ALL]"
                     data-pagination="true">
@@ -71,11 +63,11 @@
                             <td> <%= session.username %> </td>
                             <td> <%= session.date %> </td>
                             <td> <%= session.totalScore %> </td>
-                            <td> <%= session.totalTime %> </td>
+                            <td> <%= Math.floor(session.totalTime) %> </td>
                             
                             <% session.sceneScores.forEach(scene => { %>
                                 <td> <%= scene.score %> </td>
-                                <td> <%= scene.time %> </td>
+                                <td> <%= Math.floor(scene.time) %> </td>
                             <% }) %>
                         </tr>
                     <% }) %>
@@ -85,14 +77,67 @@
     </div>
 
     <script>
-        $(function () {
-        	var $table = $('#table');
-        	$('#toolbar').find('select').change(function () {
-            $table.bootstrapTable('refreshOptions', {
-              exportDataType: $(this).val()
-            });
-          });
+
+        let data2 = JSON.parse('<%- formattedSessionData %>')
+        console.log(data2);
+
+        document.getElementById('download-button').addEventListener('click', function() {
+            
+            let csv ='';
+
+            // Loop the array of objects
+            for (let row = 0; row < data2.length; row++) {
+                let keysAmount = Object.keys(data2[row]).length
+                let keysCounter = 0
+
+                // If this is the first row, generate the headings
+                if (row === 0) {
+                    // Loop each property of the object
+                    for (let key in data2[row]) {
+                        // Don't add comma to the last cell
+                        csv += key + (keysCounter+1 < keysAmount ? ';' : '\r\n')
+                        keysCounter++
+                    }
+                    keysCounter = 0;
+                    for (let key in data2[row]) {
+                        // Add values of the first row
+                        csv += data2[row][key] + (keysCounter+1 < keysAmount ? ';' : '\r\n')
+                        keysCounter++
+                    }
+                } else {
+                    for (let key in data2[row]) {
+                        // Add values for the rest of the rows
+                        csv += data2[row][key] + (keysCounter+1 < keysAmount ? ';' : '\r\n')
+                        keysCounter++
+                    }
+                }
+                keysCounter = 0
+            }
+
+            // After done looping, download the csv by creating a link
+            let link = document.createElement('a')
+            link.id = 'download-csv'
+            link.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(csv))
+            link.setAttribute('download', 'textfile.csv')
+            document.body.appendChild(link)
+            document.querySelector('#download-csv').click()
         });
+        
+
+        // console.log(data);
+        // $(function () {
+        //     $('#table').bootstrapTable({
+        //         data: data
+        //     });
+        // });
+        // $(function () {
+        // 	var $table = $('#table');
+        // 	$('#toolbar').find('select').change(function () {
+        //     $table.bootstrapTable('refreshOptions', {
+        //       exportDataType: $(this).val()
+        //     });
+        //   });
+        // });
     </script>
 </body>
 </html>
