@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.13.1/bootstrap-table.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.13.1/bootstrap-table.min.js"></script>
+    <script src="main.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Scorelist</h1>
+        <div class="row">
+            <div id="toolbar">
+                <select class="form-control">
+                    <option value="">Export Basic</option>
+                    <option value="all">Export All</option>
+                    <option value="selected">Export Selected</option>
+                </select>
+            </div>
+       </div>
+        <div class="row">
+            <table id="table" 
+                    class="table" 
+                    data-toggle="table" 
+                    data-toolbar="#toolbar"
+                    data-search="true"
+                    data-show-export="true"
+                    data-show-refresh="true"
+                    data-show-toggle="true"
+                    data-show-columns="true"
+                    data-detail-formatter="detailFormatter"
+                    data-show-pagination-switch="true" 
+                    data-page-list="[10, 25, 50, 100, ALL]"
+                    data-pagination="true">
+                <thead>
+                    <tr>
+                        <th rowspan="2" scope="col">Username</th>
+                        <th rowspan="2" scope="col">Date</th>
+                        <th rowspan="2" scope="col">Score</th>
+                        <th rowspan="2" scope="col">Time</th>
+                        <th colspan="2" scope="col">Scene 1 </th>
+                        <th colspan="2" scope="col">Scene 2 </th>
+                        <th colspan="2" scope="col">Scene 3 </th>
+                        <th colspan="2" scope="col">Scene 4 </th>
+                        <th colspan="2" scope="col">Scene 5 </th>
+                    </tr>
+                    <tr>
+                        <th scope="col">Score</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">Score</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">Score</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">Score</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">Score</th>
+                        <th scope="col">Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% sessionData.forEach(session => { %>
+                        <tr>
+                            <td> <%= session.username %> </td>
+                            <td> <%= session.date %> </td>
+                            <td> <%= session.totalScore %> </td>
+                            <td> <%= session.totalTime %> </td>
+                            
+                            <% session.sceneScores.forEach(scene => { %>
+                                <td> <%= scene.score %> </td>
+                                <td> <%= scene.time %> </td>
+                            <% }) %>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        $(function () {
+        	var $table = $('#table');
+        	$('#toolbar').find('select').change(function () {
+            $table.bootstrapTable('refreshOptions', {
+              exportDataType: $(this).val()
+            });
+          });
+        });
+    </script>
+</body>
+</html>
