@@ -8,11 +8,11 @@ exports.create = (req, res) => {
         date: req.body.date,
         totalScore: req.body.totalScore,
         totalTime: req.body.totalTime,
-        scene1Scores: req.body.scene1Scores,
-        scene2Scores: req.body.scene2Scores,
-        scene3Scores: req.body.scene3Scores,
-        scene4Scores: req.body.scene4Scores,
-        scene5Scores: req.body.scene5Scores
+        scene1Score: req.body.scene1Score,
+        scene2Score: req.body.scene2Score,
+        scene3Score: req.body.scene3Score,
+        scene4Score: req.body.scene4Score,
+        scene5Score: req.body.scene5Score
     });
     newSession.save()
     .then((session) => {
