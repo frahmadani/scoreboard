@@ -3,15 +3,13 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
+    <title>L'Oreal Scoresheet</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.13.1/bootstrap-table.min.css">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.13.1/bootstrap-table.min.js"></script>
-    <script src="main.js"></script>
 </head>
 <body>
 
@@ -19,7 +17,7 @@
         <h1>Scorelist</h1>
         <div class="row">
             <div id="toolbar">
-                <button id="download-button" class="btn btn-info">Download as CSV</button>
+                <button id="download-button" class="btn btn-disabled">Download as CSV</button>
             </div>
            
        </div>
@@ -115,29 +113,17 @@
             }
 
             // After done looping, download the csv by creating a link
+            let date = new Date()
+            let timestamp = date.toISOString().slice(0,10).replace(/-/g,"")
+            
             let link = document.createElement('a')
             link.id = 'download-csv'
             link.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(csv))
-            link.setAttribute('download', 'textfile.csv')
+            link.setAttribute('download', 'scoresheet-' + timestamp + '.csv')
             document.body.appendChild(link)
             document.querySelector('#download-csv').click()
         });
         
-
-        // console.log(data);
-        // $(function () {
-        //     $('#table').bootstrapTable({
-        //         data: data
-        //     });
-        // });
-        // $(function () {
-        // 	var $table = $('#table');
-        // 	$('#toolbar').find('select').change(function () {
-        //     $table.bootstrapTable('refreshOptions', {
-        //       exportDataType: $(this).val()
-        //     });
-        //   });
-        // });
     </script>
 </body>
 </html>
