@@ -8,7 +8,7 @@ exports.create = (req, res) => {
         date: req.body.date,
         totalScore: req.body.totalScore,
         totalTime: req.body.totalTime,
-        sceneScores: JSON.parse(req.body.sceneScores)
+        sceneScores: req.body.sceneScores
     });
     newSession.save()
     .then((session) => {
