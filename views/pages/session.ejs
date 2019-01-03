@@ -62,11 +62,16 @@
                             <td> <%= session.date %> </td>
                             <td> <%= session.totalScore %> </td>
                             <td> <%= Math.floor(session.totalTime) %> </td>
-                            
-                            <% session.sceneScores.forEach(scene => { %>
-                                <td> <%= scene.score %> </td>
-                                <td> <%= Math.floor(scene.time) %> </td>
-                            <% }) %>
+                            <td> <%= session.scene1Score.score %> </td>
+                            <td> <%= Math.floor(session.scene1Score.time) %> </td>
+                            <td> <%= session.scene2Score.score %> </td>
+                            <td> <%= Math.floor(session.scene2Score.time) %> </td>
+                            <td> <%= session.scene3Score.score %> </td>
+                            <td> <%= Math.floor(session.scene3Score.time) %> </td>
+                            <td> <%= session.scene4Score.score %> </td>
+                            <td> <%= Math.floor(session.scene4Score.time) %> </td>
+                            <td> <%= session.scene5Score.score %> </td>
+                            <td> <%= Math.floor(session.scene5Score.time) %> </td>
                         </tr>
                     <% }) %>
                 </tbody>
