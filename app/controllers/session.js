@@ -1,5 +1,10 @@
 const Session = require('../models/Session');
 
+// APP ROOT
+exports.getRoot = (req, res) => {
+    res.status(200).send({ message: "OK", status: "success"});
+}
+
 // RETRIEVE all session data with formatted raw
 exports.findAll = (req, res) => {
     Session.find({}).select('-_id')
@@ -28,6 +33,6 @@ exports.findAll = (req, res) => {
         res.render('pages/session', {formattedSessionData: JSON.stringify(formattedData), sessionData: data});
     }).catch((err) => {
         console.log(err);
-        res.redirect('/index');
+        res.send({ status: "error", message:"error"});
     });
 }
