@@ -8,7 +8,7 @@ exports.create = (req, res) => {
         date: req.body.date,
         totalScore: req.body.totalScore,
         totalTime: req.body.totalTime,
-        sceneScores: req.body.sceneScores
+        sceneScores: JSON.parse(req.body.sceneScores)
     });
     newSession.save()
     .then((session) => {
@@ -52,7 +52,7 @@ exports.update = (req, res) => {
         })
     }).catch((err) => {
         res.send({ success: false, message: err })
-    })
+    }
 }
 
 // DELETE one session data
