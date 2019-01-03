@@ -52,7 +52,7 @@ exports.update = (req, res) => {
         })
     }).catch((err) => {
         res.send({ success: false, message: err })
-    }
+    })
 }
 
 // DELETE one session data
