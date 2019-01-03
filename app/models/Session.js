@@ -6,21 +6,21 @@ const SessionSchema = new mongoose.Schema({
     date: String,
     totalScore: Number,
     totalTime: Number,
-    scene1Scores: {
+    scene1Score: {
         time: Number,
         score: Number,
         maxScore: Number,
         userAnswers: [Number],
         userDecisions: [Number]
     },
-    scene2Scores: {
+    scene2Score: {
         time: Number,
         score: Number,
         maxScore: Number,
         userAnswers: [Number],
         userDecisions: [Number]
     },
-    scene3Scores: {
+    scene3Score: {
         time: Number,
         score: Number,
         maxScore: Number,
@@ -34,7 +34,7 @@ const SessionSchema = new mongoose.Schema({
         userAnswers: [Number],
         userDecisions: [Number]
     },
-    scene5Scores: {
+    scene5Score: {
         time: Number,
         score: Number,
         maxScore: Number,
