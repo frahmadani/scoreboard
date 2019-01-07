@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>L'Oreal Scoresheet</title>
+    <title>Online Scoresheet</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.13.1/bootstrap-table.min.css">
@@ -56,6 +56,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <!-- Begin loop the sessionData array -->
                     <% sessionData.forEach(session => { %>
                         <tr class="clickable-row" data-href="/index">
                             <td> <%= session.username %> </td>
@@ -74,6 +75,7 @@
                             <td> <%= Math.floor(session.scene5Score.time) %> </td>
                         </tr>
                     <% }) %>
+                    <!-- end loop -->
                 </tbody>
             </table>
         </div>
@@ -81,9 +83,11 @@
 
     <script>
 
+        // catch 'formattedSessionData' from backend and parse it
         let data2 = JSON.parse('<%- formattedSessionData %>')
         console.log(data2);
 
+        // Begin section to handle downloading report as csv file
         document.getElementById('download-button').addEventListener('click', function() {
             
             let csv ='';
@@ -121,6 +125,7 @@
             let date = new Date()
             let timestamp = date.toISOString().slice(0,10).replace(/-/g,"")
             
+            // Generate dummy link to trigger download start
             let link = document.createElement('a')
             link.id = 'download-csv'
             link.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(csv))
@@ -128,7 +133,9 @@
             document.body.appendChild(link)
             document.querySelector('#download-csv').click()
         });
+        // Finish section downloading report as csv file
 
+        // Make the rows click-able (To be used later)
         jQuery(document).ready(function($) {
             $(".clickable-row").click(function() {
                 window.location = $(this).data("href");
