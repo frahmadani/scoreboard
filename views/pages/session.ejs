@@ -57,7 +57,7 @@
                 </thead>
                 <tbody>
                     <% sessionData.forEach(session => { %>
-                        <tr>
+                        <tr class="clickable-row" data-href="/index">
                             <td> <%= session.username %> </td>
                             <td> <%= session.date %> </td>
                             <td> <%= session.totalScore %> </td>
@@ -128,7 +128,13 @@
             document.body.appendChild(link)
             document.querySelector('#download-csv').click()
         });
-        
+
+        jQuery(document).ready(function($) {
+            $(".clickable-row").click(function() {
+                window.location = $(this).data("href");
+            });
+        });
+
     </script>
 </body>
 </html>
