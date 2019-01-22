@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Online Scoresheet</title>
+    <title><%= sessionData.username %> Scoresheet</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.13.1/bootstrap-table.min.css"> -->
@@ -14,28 +14,15 @@
 <body>
 
     <div class="container">
-        <h1>Scorelist</h1>
+        <h1>Score Detail</h1>
         <div class="row">
-            <div id="toolbar">
-                <button id="download-button" class="btn btn-disabled">Download as CSV</button>
-            </div>
-           
-       </div>
-        <div class="row">
-            <table id="table" 
-                    class="table" 
-                    data-toggle="table" 
-                    data-toolbar="#toolbar"
-                    data-search="true"
-                    data-show-pagination-switch="true" 
-                    data-page-list="[10, 25, 50, 100, ALL]"
-                    data-pagination="true">
+            <table class="table">
                 <thead>
                     <tr>
-                        <th rowspan="2" scope="col">Username</th>
-                        <th rowspan="2" scope="col">Date</th>
-                        <th rowspan="2" scope="col">Score</th>
-                        <th rowspan="2" scope="col">Time</th>
+                        <th rowspan="2" scope="col" data-sortable="true">Username</th>
+                        <th rowspan="2" scope="col" data-sortable="true">Date</th>
+                        <th rowspan="2" scope="col" data-sortable="true">Score</th>
+                        <th rowspan="2" scope="col" data-sortable="true">Time(s)</th>
                         <th colspan="2" scope="col">Scene 1 </th>
                         <th colspan="2" scope="col">Scene 2 </th>
                         <th colspan="2" scope="col">Scene 3 </th>
@@ -43,22 +30,21 @@
                         <th colspan="2" scope="col">Scene 5 </th>
                     </tr>
                     <tr>
-                        <th scope="col">Score</th>
-                        <th scope="col">Time</th>
-                        <th scope="col">Score</th>
-                        <th scope="col">Time</th>
-                        <th scope="col">Score</th>
-                        <th scope="col">Time</th>
-                        <th scope="col">Score</th>
-                        <th scope="col">Time</th>
-                        <th scope="col">Score</th>
-                        <th scope="col">Time</th>
+                        <th scope="col" data-sortable="true">Score</th>
+                        <th scope="col" data-sortable="true">Time(s)</th>
+                        <th scope="col" data-sortable="true">Score</th>
+                        <th scope="col" data-sortable="true">Time(s)</th>
+                        <th scope="col" data-sortable="true">Score</th>
+                        <th scope="col" data-sortable="true">Time(s)</th>
+                        <th scope="col" data-sortable="true">Score</th>
+                        <th scope="col" data-sortable="true">Time(s)</th>
+                        <th scope="col" data-sortable="true">Score</th>
+                        <th scope="col" data-sortable="true">Time(s)</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Begin loop the sessionData array -->
                     <% sessionData.forEach(session => { %>
-                        <tr class="clickable-row" data-href="/index">
+                        <tr class="clickable-row" data-href="/view/<%= session._id %>">
                             <td> <%= session.username %> </td>
                             <td> <%= session.date %> </td>
                             <td> <%= session.totalScore %> </td>
@@ -75,7 +61,6 @@
                             <td> <%= Math.floor(session.scene5Score.time) %> </td>
                         </tr>
                     <% }) %>
-                    <!-- end loop -->
                 </tbody>
             </table>
         </div>
@@ -83,11 +68,9 @@
 
     <script>
 
-        // catch 'formattedSessionData' from backend and parse it
         let data2 = JSON.parse('<%- formattedSessionData %>')
         console.log(data2);
 
-        // Begin section to handle downloading report as csv file
         document.getElementById('download-button').addEventListener('click', function() {
             
             let csv ='';
@@ -125,7 +108,6 @@
             let date = new Date()
             let timestamp = date.toISOString().slice(0,10).replace(/-/g,"")
             
-            // Generate dummy link to trigger download start
             let link = document.createElement('a')
             link.id = 'download-csv'
             link.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(csv))
@@ -133,9 +115,7 @@
             document.body.appendChild(link)
             document.querySelector('#download-csv').click()
         });
-        // Finish section downloading report as csv file
 
-        // Make the rows click-able (To be used later)
         jQuery(document).ready(function($) {
             $(".clickable-row").click(function() {
                 window.location = $(this).data("href");
