@@ -6,14 +6,41 @@ const SessionSchema = new mongoose.Schema({
     date: String,
     totalScore: Number,
     totalTime: Number,
-    sceneScores: [{
-        quizId: Number,
+    scene1Score: {
         time: Number,
         score: Number,
         maxScore: Number,
         userAnswers: [Number],
         userDecisions: [Number]
-    }],
+    },
+    scene2Score: {
+        time: Number,
+        score: Number,
+        maxScore: Number,
+        userAnswers: [Number],
+        userDecisions: [Number]
+    },
+    scene3Score: {
+        time: Number,
+        score: Number,
+        maxScore: Number,
+        userAnswers: [Number],
+        userDecisions: [Number]
+    },
+    scene4Score: {
+        time: Number,
+        score: Number,
+        maxScore: Number,
+        userAnswers: [Number],
+        userDecisions: [Number]
+    },
+    scene5Score: {
+        time: Number,
+        score: Number,
+        maxScore: Number,
+        userAnswers: [Number],
+        userDecisions: [Number]
+    },
     dateUploaded: { type: Date, default: Date.now() }
 });
 

@@ -5,6 +5,9 @@ const   express = require('express'),
         bodyParser = require('body-parser'),
         methodOverride = require('method-override');
 
+// For mockup seeding
+const   seedDB = require('./seedDB');
+
 // Initializatons
 const   app = express(),
         server = require('http').Server(app);
@@ -14,7 +17,7 @@ app.use(bodyParser.json());
 
 // Routes & Variables
 const   port = process.env.PORT || 3000,
-        mongoDbUrl = process.env.MONGODB_URL || 'mongodb://localhost:27017/loreal_db';
+        mongoDbUrl = process.env.MONGODB_URL || 'mongodb://localhost:27017/database';
 
 const   apiSessionRoutes = require('./app/routes/api.session'),
         sessionRoutes = require('./app/routes/session');
@@ -29,6 +32,8 @@ app.use('/', sessionRoutes);
 
 mongoose.connect(mongoDbUrl, { useNewUrlParser: true });
 
+seedDB();
+
 server.listen(port, function() {
-    console.log('L\'Oreal app is listening on port 3000...');
+    console.log('Dashboard app is listening on port 3000...');
 });
