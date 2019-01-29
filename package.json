@@ -1,5 +1,5 @@
 {
-  "name": "loreal-backend",
+  "name": "dashboard-backend",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "ssh://git@gitlab.playcourt.id:31022/amoeba/smarteye/loreal-dashboard.git"
+    "url": ""
   },
   "author": "SmartEye",
   "license": "ISC",
